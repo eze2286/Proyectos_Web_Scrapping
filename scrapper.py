@@ -20,7 +20,7 @@ def parse_notice(link, today):
             parsed = html.fromstring(notice)
             try:
                title = parsed.xpath(Titulos)[0].strip()
-               title = title.replace('\"', '').replace("?", "").replace("¿", "").replace(":", " ")
+               title = title.replace('\"', '').replace("?", "").replace("¿", "").replace(":", " ").replace("/", "-")
                summary = parsed.xpath(Resumen)[0].strip()
                body_base = parsed.xpath(Cuerpo)[0:]
                body_final = ""
