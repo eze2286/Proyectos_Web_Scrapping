@@ -26,7 +26,7 @@ def parse_notice(link, today):
                body_final = ""
                for linea in body_base:
                     body_final += " " + linea.replace("\n", "").strip()
-                        #print(linea)
+                        
     
 
             except IndexError:
@@ -49,15 +49,13 @@ def parse_notice(link, today):
 def parse_home():
     try:
         response = requests.get(home_url, encabezados)
-        ##links_cronista_completo = []
+        
         if response.status_code == 200:
-            #home = response.text 
+             
             home=response.content
             parse = html.fromstring(home)  # Usando lxml me transforma el codigo html de requests a codigo xpath
             links_xpath = parse.xpath(Links)
-            ##for link in links_xpath:
-                ##links_cronista_completo.append("https://www.cronista.com"+link)
-            #print(links_cronista_completo)
+            
 
             today = datetime.date.today().strftime('%d-%m-%Y')
             if not os.path.isdir(today):
