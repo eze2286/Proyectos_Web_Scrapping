@@ -2,6 +2,11 @@ import requests
 import lxml.html as html
 import os
 import datetime
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import string
+import nltk
+from nltk.corpus import stopwords
 encabezados  = {
     "user-agent" : "Mozilla / 5.0 (X11; Linux x86_64) AppleWebKit / 537.36 (KHTML, como Gecko) Ubuntu Chromium / 71.0.3578.80 Chrome / 71.0.3578.80 Safari / 537.36" ,
 }
@@ -68,9 +73,41 @@ def parse_home():
             raise ValueError(f"Error {response.status_code}")
     except ValueError as ve:
         print(ve)
+        
+def word_cloud():
+    today = datetime.date.today().strftime('%d-%m-%Y')
+    archivos_txt = os.listdir(r'C:\Users\ezequiel\{}'.format(today))
+    lista_cruda_noticias = []
+    for i in archivos_txt:
+        archivo = open(r'C:\Users\ezequiel\{}\{}'.format(today,i), 'r', encoding = "utf-8", errors='strict')
+        contenido = archivo.read()
+        contenido = contenido.replace('\n',"")
+        contenido = contenido.replace('\t',"")
+        contenido = contenido.replace('  '," ")
+    #lista_cruda_noticias = lista_cruda_noticias + " " + contenido
+        lista_cruda_noticias.append(contenido)
+        archivo.close()
+    lista_cruda_noticias_one_string = ' '.join(lista_cruda_noticias)
+    return lista_cruda_noticias_one_string
 
+def message_cleaning():
+    message = word_cloud()
+    Test_punc_removed = [char for char in message if char not in string.punctuation]
+    Test_punc_removed_join = ''.join(Test_punc_removed)
+    Test_punc_removed_join_clean = [word for word in Test_punc_removed_join.split() if word.lower() not in stopwords.words('spanish')]
+    news_cleaning_final = ' '.join(Test_punc_removed_join_clean)
+    plt.figure(figsize=(30,30))
+    plt.imshow(WordCloud().generate(news_cleaning_final))
+    plt.show()
+    
+    
 def run():
     parse_home()
+def run2():
+    message_cleaning()
+    
 
 if __name__ == "__main__":
     run()
+    run2()
+    
