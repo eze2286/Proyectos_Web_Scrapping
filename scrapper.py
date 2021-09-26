@@ -76,10 +76,12 @@ def parse_home():
         
 def word_cloud():
     today = datetime.date.today().strftime('%d-%m-%Y')
-    archivos_txt = os.listdir(r'C:\Users\ezequiel\{}'.format(today))
+    #archivos_txt = os.listdir(r'C:\Users\ezequiel\{}'.format(today))
+    archivos_txt = os.listdir(r'D:\Desktop\Todas mis cosas\Cursos\EXCEL\Platzi\Git y GitHub\Web_Scrapping\{}'.format(today))
     lista_cruda_noticias = []
     for i in archivos_txt:
-        archivo = open(r'C:\Users\ezequiel\{}\{}'.format(today,i), 'r', encoding = "utf-8", errors='strict')
+        #archivo = open(r'C:\Users\ezequiel\{}\{}'.format(today,i), 'r', encoding = "utf-8", errors='strict')
+        archivo = open(r'D:\Desktop\Todas mis cosas\Cursos\EXCEL\Platzi\Git y GitHub\Web_Scrapping\{}\{}'.format(today,i), 'r', encoding = "utf-8", errors='strict')
         contenido = archivo.read()
         contenido = contenido.replace('\n',"")
         contenido = contenido.replace('\t',"")
